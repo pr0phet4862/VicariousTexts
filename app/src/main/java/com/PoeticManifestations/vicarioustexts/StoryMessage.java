@@ -1,7 +1,5 @@
 package com.PoeticManifestations.vicarioustexts;
 
-import java.util.ArrayList;
-
 /*
 * Story Message is the class used to store a single message of the story.
 * The class contains the message, timestamp, and a list of the next connecting messages.
@@ -10,15 +8,16 @@ import java.util.ArrayList;
 */
 
 public class StoryMessage {
-    private String message, timeStamp, messageSummary;
+    private String text, timeStamp, messageSummary;
     private boolean isPlayer;
     private int index;
-    private ArrayList<StoryMessage> nextMessages;
+    private StoryMessage nextMessage;
 
-    public StoryMessage(String message, boolean isPlayer, int index) {
-        this.message = message;
+    public StoryMessage(String text, boolean isPlayer, int index) {
+        this.text = text;
         this.isPlayer = isPlayer;
         this.index = index;
+        this.nextMessage = null;
     }
 
     //A short description of the message if player has multiple reply choices
@@ -30,39 +29,27 @@ public class StoryMessage {
         this.timeStamp = timeStamp;
     }
 
-    public void setNextMessages(ArrayList<StoryMessage> nextMessages){
-        this.nextMessages = nextMessages;
-    }
-
     //Adds a new connecting message to the current message
-    public StoryMessage addNextMessage(String nextMessage, boolean isPlayer, int index){
-        StoryMessage nextStoryMessage = new StoryMessage(nextMessage, isPlayer, index);
-        nextMessages.add(nextStoryMessage);
+    public StoryMessage addNextMessage(String message, boolean isPlayer, int index){
+        StoryMessage nextStoryMessage = new StoryMessage(message, isPlayer, index);
+        this.nextMessage = nextStoryMessage;
         return  nextStoryMessage;
     }
 
-    public String getMessage() {
-        return message;
+    public String getText() {
+        return text;
     }
 
     public String getMessageSummary() {
         return messageSummary;
     }
 
+    public StoryMessage getNextMessage() {
+        return nextMessage;
+    }
+
     public String getTimeStamp() {
         return timeStamp;
-    }
-
-    public StoryMessage getFirstNextMessage(){
-        return nextMessages.get(0);
-    }
-
-    public ArrayList<StoryMessage> getNextMessages(){
-        return nextMessages;
-    }
-
-    public int getNextMessagesCount() {
-        return  nextMessages.size();
     }
 
     public boolean isPlayerMessage(){
