@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/topAppBarLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            style="@style/Widget.MaterialComponents.Toolbar.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:title="Vicarious Texts"
+            android:elevation="4dp">
+        </com.google.android.material.appbar.MaterialToolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/messageRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/inputLinearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topAppBarLayout">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/inputLinearLayout"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/messageRecyclerView"
+        app:layout_constraintVertical_bias="0.0"
+        android:padding="4dp"
+        android:elevation="2dp"
+        android:background="@color/colorPrimaryVariant">
+
+        <!--<com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.9"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+            app:boxBackgroundColor="@color/colorPrimaryVariant"
+            app:boxCornerRadiusBottomEnd="25dp"
+            app:boxCornerRadiusBottomStart="25dp"
+            app:boxCornerRadiusTopEnd="25dp"
+            app:boxCornerRadiusTopStart="25dp"
+            android:hint="Type here..."
+            app:hintTextColor="@color/colorText"
+            android:textColorHint="#F0F0F0"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:maxHeight="100dp"
+                android:layout_margin="5dp"
+                android:textColor="@color/colorText" />
+        </com.google.android.material.textfield.TextInputLayout>-->
+        <EditText
+            android:id="@+id/messageInput"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:maxHeight="120dp"
+            android:layout_weight="0.85"
+            android:hint="Type here..."
+            android:textSize="18sp"
+            android:textColor="@color/colorText"
+            android:textColorHint="#F0F0F0"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:backgroundTint="@color/colorPrimary"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+            />
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/sendButton"
+            android:contentDescription="Send Message"
+            android:src="@drawable/ic_send"
+            android:layout_weight="0.15"
+            style="@style/TextAppearance.MaterialComponents.Button"
+            android:backgroundTint="@color/colorPrimaryVariant"
+        />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
