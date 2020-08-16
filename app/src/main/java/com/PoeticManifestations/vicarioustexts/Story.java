@@ -14,10 +14,6 @@ public class Story {
         this.author = author;
     }
 
-    public void startStory(String storyStartMessage){
-        this.storyStartMessage = storyStartMessage;
-        story = new StoryMessage(this.storyStartMessage, false, 0);
-        currentMessage = story;
-    }
+
 
 }

@@ -7,11 +7,15 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MessageRecycvlerViewAdapter extends RecyclerView.Adapter<MessageRecycvlerViewAdapter.ViewHolder>{
-    Context context;
+import java.util.ArrayList;
 
-    public MessageRecycvlerViewAdapter(Context context) {
+public class MessageRecycvlerViewAdapter extends RecyclerView.Adapter<MessageRecycvlerViewAdapter.ViewHolder>{
+    private Context context;
+    private ArrayList<String> story;
+
+    public MessageRecycvlerViewAdapter(Context context, ArrayList<String> story) {
         this.context = context;
+        this.story = story;
     }
 
     @NonNull
@@ -43,5 +47,9 @@ public class MessageRecycvlerViewAdapter extends RecyclerView.Adapter<MessageRec
         public String toString() {
             return super.toString();
         }
+    }
+
+    public void addMessage(String message, boolean isPlayer){
+        story.add(message);
     }
 }

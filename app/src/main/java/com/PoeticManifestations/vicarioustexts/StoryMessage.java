@@ -45,8 +45,16 @@ public class StoryMessage {
         return message;
     }
 
+    public String getMessageSummary() {
+        return messageSummary;
+    }
+
     public String getTimeStamp() {
         return timeStamp;
+    }
+
+    public StoryMessage getFirstNextMessage(){
+        return nextMessages.get(0);
     }
 
     public ArrayList<StoryMessage> getNextMessages(){
@@ -59,5 +67,9 @@ public class StoryMessage {
 
     public boolean isPlayerMessage(){
         return isPlayer;
+    }
+
+    public int getMessageIndex(){
+        return index;
     }
 }
