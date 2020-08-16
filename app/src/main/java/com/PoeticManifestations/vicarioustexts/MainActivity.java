@@ -1,15 +1,23 @@
 package com.PoeticManifestations.vicarioustexts;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.appbar.MaterialToolbar;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,43 +26,94 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView messageRecyclerView;
     private EditText messageInput;
     private ImageButton sendButton;
-    private TextView profile_status;
-    private StoryBuilder newStory;
 
     //Other variables
     private String playerName;
+    private StoryBuilder newStory;
+    private Story story;
+    private String currentPlayerMessage;
+    private MessageRecycvlerViewAdapter messageRecycvlerViewAdapter;
+    private ArrayList<String> sentMessages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         playerName = "Nitish";
+        sentMessages = new ArrayList<>();
         //Initialize all view components
         initViews();
+        messageRecycvlerViewAdapter = new MessageRecycvlerViewAdapter(this);
+        messageRecyclerView.setAdapter(messageRecycvlerViewAdapter);
+        messageRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         play();
     }
 
     private void play() {
         createNewStory();
-        profile_status.setText("Online");
-        Story story = this.newStory;
+        toolbar.setSubtitle("Online");
+        story = this.newStory;
         story.startStory();
         int msgIndex = 0;
-        Log.d("MainActivity",story.getCurrentMessage().getText());
-        while(story.next()){
-            Log.d("MainActivity",Integer.toString(++msgIndex));
-            Log.d("MainActivity",story.getCurrentMessage().getText());
-        }
+        displayBotMessage();
     }
 
     private void initViews() {
         toolbar = findViewById(R.id.topAppBar);
         setSupportActionBar(toolbar);
-        toolbar.setTitle("");
+        toolbar.setTitle("Annie");
+        toolbar.setSubtitle("Offline");
         messageRecyclerView = findViewById(R.id.messageRecyclerView);
         messageInput = findViewById(R.id.messageInput);
+        messageInput.setInputType(InputType.TYPE_NULL);
         sendButton = findViewById(R.id.sendButton);
-        profile_status = findViewById(R.id.profile_status);
+        sendButton.setEnabled(false);
+       messageInput.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               if (currentPlayerMessage!=null){
+                   messageInput.setText(currentPlayerMessage);
+                   messageInput.setEnabled(false);
+                   sendButton.setEnabled(true);
+               }
+           }
+       });
+       sendButton.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               sendButton.setEnabled(false);
+               messageInput.setText("");
+               messageRecycvlerViewAdapter.addMessage(story.getCurrentMessage());
+               messageRecyclerView.smoothScrollToPosition(messageRecycvlerViewAdapter.getItemCount() - 1);
+               if (story.next()) {
+                   Log.d("MainActivity", story.getCurrentMessage().getText());
+                   if (story.getCurrentMessage().isPlayerMessage()) {
+                       currentPlayerMessage = story.getCurrentMessage().getText();
+                       messageInput.setEnabled(true);
+                   } else {
+                       messageInput.setEnabled(false);
+                       displayBotMessage();
+                   }
+               } else {
+                   toolbar.setSubtitle("Offline");
+               }
+           }
+       });
+    }
+
+    private void displayBotMessage() {
+        messageRecycvlerViewAdapter.addMessage(story.getCurrentMessage());
+        messageRecyclerView.smoothScrollToPosition(messageRecycvlerViewAdapter.getItemCount() - 1);
+        if (story.next()){
+            if(story.getCurrentMessage().isPlayerMessage()){
+                currentPlayerMessage = story.getCurrentMessage().getText();
+                messageInput.setEnabled(true);
+            } else {
+                displayBotMessage();
+            }
+        } else {
+            toolbar.setSubtitle("Offline");
+        }
     }
 
     private void createNewStory() {

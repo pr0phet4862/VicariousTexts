@@ -1,37 +1,56 @@
 package com.PoeticManifestations.vicarioustexts;
 
 import android.content.Context;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
 public class MessageRecycvlerViewAdapter extends RecyclerView.Adapter<MessageRecycvlerViewAdapter.ViewHolder>{
     private Context context;
-    private ArrayList<String> story;
+    private ArrayList<StoryMessage> story;
 
-    public MessageRecycvlerViewAdapter(Context context, ArrayList<String> story) {
+    public MessageRecycvlerViewAdapter(Context context) {
         this.context = context;
-        this.story = story;
+        this.story = new ArrayList<>();
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+        View v = LayoutInflater.from(context).inflate(R.layout.message_list_view, parent,false);
+        return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
+        StoryMessage message = story.get(position);
+        if (message.isPlayerMessage()){
+            holder.messageviewParentLayout.setHorizontalGravity(Gravity.END);
+            holder.messageviewParentLayout.setPadding(dpToPx(100),0,0,0);
+            holder.messageViewLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
+            holder.messageViewMessage.setGravity(Gravity.END);
+        } else {
+            holder.messageviewParentLayout.setHorizontalGravity(Gravity.START);
+            holder.messageviewParentLayout.setPadding(0,0, dpToPx(100),0);
+            holder.messageViewLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.colorSecondary));
+            holder.messageViewMessage.setGravity(Gravity.START);
+        }
+        holder.messageViewMessage.setText(message.getText());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return story.size();
     }
 
     public void setMessages(){
@@ -39,8 +58,15 @@ public class MessageRecycvlerViewAdapter extends RecyclerView.Adapter<MessageRec
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
+        TextView messageViewMessage, messageViewTime;
+        LinearLayout messageViewLayout, messageviewParentLayout;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            messageViewMessage = itemView.findViewById(R.id.messageViewMessage);
+            messageViewTime = itemView.findViewById(R.id.messageViewTime);
+            messageViewLayout = itemView.findViewById(R.id.messageViewLayout);
+            messageviewParentLayout = itemView.findViewById(R.id.messageViewParentLayout);
         }
 
         @Override
@@ -49,7 +75,14 @@ public class MessageRecycvlerViewAdapter extends RecyclerView.Adapter<MessageRec
         }
     }
 
-    public void addMessage(String message, boolean isPlayer){
+    public void addMessage(StoryMessage message){
         story.add(message);
+        notifyItemChanged(story.size());
+    }
+
+    private int dpToPx(int dp){
+        float scale = context.getResources().getDisplayMetrics().density;
+        int px = (int) (dp / scale + 0.5f);
+        return px;
     }
 }
