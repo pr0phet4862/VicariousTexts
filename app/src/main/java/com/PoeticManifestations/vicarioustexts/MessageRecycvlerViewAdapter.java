@@ -36,15 +36,22 @@ public class MessageRecycvlerViewAdapter extends RecyclerView.Adapter<MessageRec
         StoryMessage message = story.get(position);
         if (message.isPlayerMessage()){
             holder.messageviewParentLayout.setHorizontalGravity(Gravity.END);
-            holder.messageviewParentLayout.setPadding(dpToPx(100),0,0,0);
-            holder.messageViewLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
-            holder.messageViewMessage.setGravity(Gravity.END);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams. MATCH_PARENT ,
+                    LinearLayout.LayoutParams. WRAP_CONTENT ) ;
+            layoutParams.setMargins( 150,0,0,0 );
+            holder.messageviewParentLayout.setLayoutParams(layoutParams);
+            holder.messageViewLayout.setBackground(ContextCompat.getDrawable(context, R.drawable.user_text));
         } else {
             holder.messageviewParentLayout.setHorizontalGravity(Gravity.START);
-            holder.messageviewParentLayout.setPadding(0,0, dpToPx(100),0);
-            holder.messageViewLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.colorSecondary));
-            holder.messageViewMessage.setGravity(Gravity.START);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams. MATCH_PARENT ,
+                    LinearLayout.LayoutParams. WRAP_CONTENT ) ;
+            layoutParams.setMargins( 0,0, 150,0 );
+            holder.messageviewParentLayout.setLayoutParams(layoutParams);
+            holder.messageViewLayout.setBackground(ContextCompat.getDrawable(context, R.drawable.bot_text));
         }
+        holder.messageViewTime.setText(message.getTimeStamp());
         holder.messageViewMessage.setText(message.getText());
     }
 

@@ -5,19 +5,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.text.Editable;
+import android.os.Handler;
 import android.text.InputType;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.appbar.MaterialToolbar;
 
-import java.util.ArrayList;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,14 +35,12 @@ public class MainActivity extends AppCompatActivity {
     private Story story;
     private String currentPlayerMessage;
     private MessageRecycvlerViewAdapter messageRecycvlerViewAdapter;
-    private ArrayList<String> sentMessages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         playerName = "Nitish";
-        sentMessages = new ArrayList<>();
         //Initialize all view components
         initViews();
         messageRecycvlerViewAdapter = new MessageRecycvlerViewAdapter(this);
@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setSubtitle("Online");
         story = this.newStory;
         story.startStory();
-        int msgIndex = 0;
         displayBotMessage();
     }
 
@@ -66,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         messageRecyclerView = findViewById(R.id.messageRecyclerView);
         messageInput = findViewById(R.id.messageInput);
         messageInput.setInputType(InputType.TYPE_NULL);
+        messageInput.setHint("Wait for message");
         sendButton = findViewById(R.id.sendButton);
         sendButton.setEnabled(false);
        messageInput.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
            public void onClick(View v) {
                sendButton.setEnabled(false);
                messageInput.setText("");
+               story.getCurrentMessage().setTimeStamp(getCurrentTimeStamp());
                messageRecycvlerViewAdapter.addMessage(story.getCurrentMessage());
                messageRecyclerView.smoothScrollToPosition(messageRecycvlerViewAdapter.getItemCount() - 1);
                if (story.next()) {
@@ -90,30 +91,76 @@ public class MainActivity extends AppCompatActivity {
                    if (story.getCurrentMessage().isPlayerMessage()) {
                        currentPlayerMessage = story.getCurrentMessage().getText();
                        messageInput.setEnabled(true);
+                       messageInput.setHint("Tap here to type...");
                    } else {
+                       messageInput.setHint("Wait for Reply");
                        messageInput.setEnabled(false);
                        displayBotMessage();
                    }
                } else {
                    toolbar.setSubtitle("Offline");
+                   messageInput.setHint("Contact has gone offline.");
                }
            }
        });
     }
 
+    private String getCurrentTimeStamp(){
+        Date currentTime = Calendar.getInstance().getTime();
+        DateFormat date = new SimpleDateFormat("HH:mm", Locale.ENGLISH);
+        return date.format(currentTime);
+    }
+
     private void displayBotMessage() {
-        messageRecycvlerViewAdapter.addMessage(story.getCurrentMessage());
-        messageRecyclerView.smoothScrollToPosition(messageRecycvlerViewAdapter.getItemCount() - 1);
-        if (story.next()){
-            if(story.getCurrentMessage().isPlayerMessage()){
-                currentPlayerMessage = story.getCurrentMessage().getText();
-                messageInput.setEnabled(true);
-            } else {
-                displayBotMessage();
+        //Create a handler which will delay execution of code
+        Handler handler = new Handler();
+        toolbar.setSubtitle("Typing....");
+        String currentMessageText = story.getCurrentMessage().getText();
+        int delay = generateRandomDelay(currentMessageText.length());
+
+        handler.postDelayed(new Runnable() {
+            //Run this code after specified delay
+            @Override
+            public void run() {
+                toolbar.setSubtitle("Online");
+                story.getCurrentMessage().setTimeStamp(getCurrentTimeStamp());
+                messageRecycvlerViewAdapter.addMessage(story.getCurrentMessage());
+                messageRecyclerView.smoothScrollToPosition(messageRecycvlerViewAdapter.getItemCount() - 1);
+                if (story.next()){
+                    if(story.getCurrentMessage().isPlayerMessage()){
+                        currentPlayerMessage = story.getCurrentMessage().getText();
+                        messageInput.setEnabled(true);
+                        messageInput.setHint("Tap here to type...");
+                        messageInput.requestFocus();
+                    } else {
+                        displayBotMessage();
+                    }
+                } else {
+                    toolbar.setSubtitle("Offline");
+                    messageInput.setHint("Contact has gone offline.");
+                }
             }
-        } else {
-            toolbar.setSubtitle("Offline");
+        }, delay);
+    }
+
+
+    //Generates random delay based on text length
+    private int generateRandomDelay(int textLength){
+        Random rand = new Random();
+        int max = 1500;
+        int min = 500;
+        if (textLength > 50){
+            max = 2500;
+            min = 1000;
+        } else if (textLength > 100){
+            max = 3000;
+            min = 1500;
+        } else if (textLength > 500){
+            max = 4500;
+            min = 2000;
         }
+        int delay = rand.nextInt(max - min) + min;
+        return delay;
     }
 
     private void createNewStory() {
@@ -220,7 +267,7 @@ public class MainActivity extends AppCompatActivity {
         newStory.addPlayerReply("i think about you all the time");
         newStory.addReply("so stop.");
         newStory.addPlayerReply("i dont know how");
-        newStory.addReply("its scraping something on the walls getting closer.. please david...");
+        newStory.addReply("its scraping something on the walls getting closer.. please " + playerName + "...");
         newStory.addPlayerReply("im trying. im trying so hard");
         newStory.addReply("It's slowing down. Try harder.");
         newStory.addReply("Whatever you're doing, it's working.");
@@ -230,7 +277,7 @@ public class MainActivity extends AppCompatActivity {
         newStory.addPlayerReply("EVERYTHING annie EVERYTHING you told me!");
         newStory.addReply("I didn't know you felt that way about me, " + playerName + " :)");
         newStory.addPlayerReply("im so glad its stopped");
-        newStory.addReply("Can you come over in the morning David? I really need to see you :)");
+        newStory.addReply("Can you come over in the morning " + playerName + "? I really need to see you :)");
         newStory.addPlayerReply("of course annie i'll be there");
         newStory.addReply("Great! Can't wait!");
         newStory.addPlayerReply("annie...");
