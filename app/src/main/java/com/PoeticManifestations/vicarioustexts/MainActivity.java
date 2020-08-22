@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import com.PoeticManifestations.vicarioustexts.story.Story;
+import com.PoeticManifestations.vicarioustexts.story.StoryBuilder;
 import com.google.android.material.appbar.MaterialToolbar;
 
 import java.text.DateFormat;
@@ -86,10 +88,10 @@ public class MainActivity extends AppCompatActivity {
                story.getCurrentMessage().setTimeStamp(getCurrentTimeStamp());
                messageRecycvlerViewAdapter.addMessage(story.getCurrentMessage());
                messageRecyclerView.smoothScrollToPosition(messageRecycvlerViewAdapter.getItemCount() - 1);
-               if (story.next()) {
-                   Log.d("MainActivity", story.getCurrentMessage().getText());
+               if (story.nextMessage()) {
+                   Log.d("MainActivity", story.getCurrentMessage().getMessage());
                    if (story.getCurrentMessage().isPlayerMessage()) {
-                       currentPlayerMessage = story.getCurrentMessage().getText();
+                       currentPlayerMessage = story.getCurrentMessage().getMessage();
                        messageInput.setEnabled(true);
                        messageInput.setHint("Tap here to type...");
                    } else {
@@ -115,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         //Create a handler which will delay execution of code
         Handler handler = new Handler();
         toolbar.setSubtitle("Typing....");
-        String currentMessageText = story.getCurrentMessage().getText();
+        String currentMessageText = story.getCurrentMessage().getMessage();
         int delay = generateRandomDelay(currentMessageText.length());
 
         handler.postDelayed(new Runnable() {
@@ -126,9 +128,9 @@ public class MainActivity extends AppCompatActivity {
                 story.getCurrentMessage().setTimeStamp(getCurrentTimeStamp());
                 messageRecycvlerViewAdapter.addMessage(story.getCurrentMessage());
                 messageRecyclerView.smoothScrollToPosition(messageRecycvlerViewAdapter.getItemCount() - 1);
-                if (story.next()){
+                if (story.nextMessage()){
                     if(story.getCurrentMessage().isPlayerMessage()){
-                        currentPlayerMessage = story.getCurrentMessage().getText();
+                        currentPlayerMessage = story.getCurrentMessage().getMessage();
                         messageInput.setEnabled(true);
                         messageInput.setHint("Tap here to type...");
                         messageInput.requestFocus();
@@ -282,5 +284,6 @@ public class MainActivity extends AppCompatActivity {
         newStory.addReply("Great! Can't wait!");
         newStory.addPlayerReply("annie...");
         newStory.addPlayerReply("annie how do i know this is you?");
+        newStory.completeStoryBuild();
     }
 }

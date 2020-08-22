@@ -1,7 +1,6 @@
 package com.PoeticManifestations.vicarioustexts;
 
 import android.content.Context;
-import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.PoeticManifestations.vicarioustexts.story.StoryMessage;
 
 import java.util.ArrayList;
 
@@ -52,7 +53,7 @@ public class MessageRecycvlerViewAdapter extends RecyclerView.Adapter<MessageRec
             holder.messageViewLayout.setBackground(ContextCompat.getDrawable(context, R.drawable.bot_text));
         }
         holder.messageViewTime.setText(message.getTimeStamp());
-        holder.messageViewMessage.setText(message.getText());
+        holder.messageViewMessage.setText(message.getMessage());
     }
 
     @Override
