@@ -17,7 +17,7 @@
 
 
         <TextView
-            android:id="@+id/text_marketplace"
+            android:id="@+id/text_marketplacR"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/eczar_semibold"
