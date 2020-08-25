@@ -27,7 +27,7 @@
         app:itemIconSize="25dp"
         app:itemTextColor="@drawable/drawable_state_text"
         app:labelVisibilityMode="selected"
-        android:background="@color/bottomnavbg"
+        android:background="@color/bottomNavBG"
         android:theme="@style/Widget.BottomNavigationView"
         app:itemIconTint="@drawable/drawable_selector_icon"
         app:menu="@menu/bottom_nav_menu" />

@@ -12,9 +12,9 @@
 
     <color name="bg">#33333d</color>
     <color name="card">#424250</color>
-    <color name="bottomnavbg">#26282f</color>
-    <color name="bottomnavhigh">#E91E63</color>
-    <color name="bottomnavlow">#a3a3a3</color>
+    <color name="bottomNavBG">#26282f</color>
+    <color name="bottomNavHigh">#E91E63</color>
+    <color name="bottomNavLow">#a3a3a3</color>
 
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>

@@ -2,8 +2,8 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:state_checked="true"
-        android:color="@color/bottomnavhigh" />
+        android:color="@color/bottomNavHigh" />
     <item
         android:state_checked="false"
-        android:color="@color/bottomnavlow"  />
+        android:color="@color/bottomNavLow"  />
 </selector>

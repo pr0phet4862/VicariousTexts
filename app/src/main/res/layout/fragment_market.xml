@@ -12,18 +12,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_gravity="top"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
-
         <TextView
-            android:id="@+id/text_marketplacR"
+            android:id="@+id/text_marketplace"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/eczar_semibold"
             android:gravity="start"
-            android:paddingLeft="20dp"
-            android:text="Story Marketplace"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="@string/marketplace"
             android:textColor="@color/white"
             android:textSize="40sp"
             android:layout_marginTop="10dp"/>
