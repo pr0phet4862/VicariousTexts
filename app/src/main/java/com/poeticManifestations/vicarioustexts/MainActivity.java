@@ -1,4 +1,4 @@
-package com.PoeticManifestations.vicarioustexts;
+package com.poeticManifestations.vicarioustexts;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,8 +12,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
-import com.PoeticManifestations.vicarioustexts.story.Story;
-import com.PoeticManifestations.vicarioustexts.story.StoryBuilder;
+import com.poeticManifestations.vicarioustexts.databinding.ActivityHomeBinding;
+import com.poeticManifestations.vicarioustexts.story.Story;
+import com.poeticManifestations.vicarioustexts.story.StoryBuilder;
 import com.google.android.material.appbar.MaterialToolbar;
 
 import java.text.DateFormat;
@@ -22,6 +23,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
+
 
 public class MainActivity extends AppCompatActivity {
 

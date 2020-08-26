@@ -1,4 +1,4 @@
-package com.PoeticManifestations.vicarioustexts.story;
+package com.poeticManifestations.vicarioustexts.story;
 
 import java.util.Date;
 

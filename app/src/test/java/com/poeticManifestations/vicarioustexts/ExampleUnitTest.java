@@ -1,4 +1,4 @@
-package com.PoeticManifestations.vicarioustexts;
+package com.poeticManifestations.vicarioustexts;
 
 import org.junit.Test;
 

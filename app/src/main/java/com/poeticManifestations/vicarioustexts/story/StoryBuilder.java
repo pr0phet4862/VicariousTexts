@@ -1,4 +1,4 @@
-package com.PoeticManifestations.vicarioustexts.story;
+package com.poeticManifestations.vicarioustexts.story;
 
 /*
 * StoryBuilder class is used to create a Story

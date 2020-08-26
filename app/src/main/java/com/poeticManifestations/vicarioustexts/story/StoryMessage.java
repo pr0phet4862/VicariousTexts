@@ -1,4 +1,4 @@
-package com.PoeticManifestations.vicarioustexts.story;
+package com.poeticManifestations.vicarioustexts.story;
 
 /*
 * Story Message is the class used to store a single message of the story.

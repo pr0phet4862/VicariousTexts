@@ -1,4 +1,4 @@
-package com.PoeticManifestations.vicarioustexts;
+package com.poeticManifestations.vicarioustexts;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
