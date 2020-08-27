@@ -3,6 +3,7 @@ package com.poeticManifestations.vicarioustexts
 import android.os.Bundle
 import android.os.Handler
 import android.text.InputType
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,6 +14,8 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
+const val KEY_MESSAGE_INDEX = "key_message_index"
+
 class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
@@ -21,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var playerName: String
     private lateinit var newStory: StoryBuilder
     private lateinit var story: Story
+    private var currentMessageIndex: Int = 0
     private var currentPlayerMessage: String? = null
 
     private lateinit var messageRecyclerViewAdapter: MessageRecyclerViewAdapter
@@ -30,12 +34,41 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
+        if(savedInstanceState != null){
+            //get the message index from saved state
+            currentMessageIndex = savedInstanceState.getInt(KEY_MESSAGE_INDEX, 0)
+            Log.i("MainActivity","Restoring Instance. Progress = $currentMessageIndex")
+        }
+
         playerName = "John"   //Set default player name
+
         messageRecyclerViewAdapter = MessageRecyclerViewAdapter(this)
         //Initialize all view components
         initViews()
+
         //Start Game Logic Loop
         play()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        //save the index of the current message
+        currentMessageIndex = story.progress
+        outState.putInt(KEY_MESSAGE_INDEX, currentMessageIndex)
+        Log.i("MainActivity","Saving Instance. Progress = $currentMessageIndex")
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+    }
+
+    //Used to restore and repopulate the recycler view in case of orientation changes or sudden app shutdowns
+    private fun restoreMessageState() {
+        for(i in 1 until currentMessageIndex){
+            displayCurrentMessage()
+            story.nextMessage()
+        }
+        refreshInputs()
     }
 
     private fun initViews() {
@@ -76,7 +109,10 @@ class MainActivity : AppCompatActivity() {
         binding.topAppBar.subtitle = "Online"
         story = newStory    //load the Story created from StoryBuilder
         story.startStory()
-        sendBotMessage()    //Display the first message, which is the bot's message
+        if (currentMessageIndex > 1)
+            restoreMessageState()   //restores messages if app was previously destroyed
+        else
+            sendBotMessage()    //Display the first message, which is the bot's message
     }
     
     private fun sendMessage(){
@@ -109,7 +145,8 @@ class MainActivity : AppCompatActivity() {
 
         //Create a handler which will delay execution of code
         val handler = Handler()
-        handler.postDelayed({   //Below code will execute after specified delay
+        //Code will execute after specified delay
+        val runnable = Runnable {
             binding.topAppBar.subtitle = "Online"
             displayCurrentMessage()
             if (story.nextMessage()) {
@@ -118,7 +155,8 @@ class MainActivity : AppCompatActivity() {
                 binding.topAppBar.subtitle = "Offline"
                 binding.messageInput.hint = "Contact has gone offline."
             }
-        }, delay.toLong())
+        }
+        handler.postDelayed(runnable, delay.toLong())
     }
 
     // Displays the currentMessage in the RecyclerView
