@@ -9,4 +9,18 @@
     <string name="title_marketplace">MARKET</string>
     <string name="title_settings">SETTINGS</string>
     <string name="title_allstories">STORIES</string>
+    <string name="settings">Settings</string>
+    <string name="vicarious_texts">Vicarious Texts</string>
+    <string name="story_completion">Story Completion</string>
+    <string name="sample_story_name">Paul\'s Fantasies</string>
+    <string name="reset">RESET</string>
+    <string name="resume">RESUME</string>
+    <string name="top_rated_story">Top Rated Story</string>
+    <string name="rate">RATE</string>
+    <string name="download">DOWNLOAD</string>
+    <string name="create_a_story">Create a Story</string>
+    <string name="edit">EDIT</string>
+    <string name="create">CREATE</string>
+    <string name="marketplace">Marketplace</string>
+    <string name="your_collections">Your Collections</string>
 </resources>

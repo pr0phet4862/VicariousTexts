@@ -1,4 +1,4 @@
-package com.PoeticManifestations.vicarioustexts;
+package com.poeticManifestations.vicarioustexts;
 
 import android.content.Context;
 import android.view.Gravity;
@@ -12,15 +12,15 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.PoeticManifestations.vicarioustexts.story.StoryMessage;
+import com.poeticManifestations.vicarioustexts.story.StoryMessage;
 
 import java.util.ArrayList;
 
-public class MessageRecycvlerViewAdapter extends RecyclerView.Adapter<MessageRecycvlerViewAdapter.ViewHolder>{
+public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<MessageRecyclerViewAdapter.ViewHolder>{
     private Context context;
     private ArrayList<StoryMessage> story;
 
-    public MessageRecycvlerViewAdapter(Context context) {
+    public MessageRecyclerViewAdapter(Context context) {
         this.context = context;
         this.story = new ArrayList<>();
     }

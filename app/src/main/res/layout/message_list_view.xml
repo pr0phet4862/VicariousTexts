@@ -1,44 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/messageViewParentLayout"
-    android:orientation="vertical"
-    android:gravity="start"
-    >
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/messageViewLayout"
-        android:orientation="horizontal"
-        android:layout_margin="12dp"
-        android:background="@drawable/bot_text"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp">
-        <TextView
-            android:id="@+id/messageViewMessage"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingStart="10dp"
-            android:paddingEnd="5dp"
-            android:textSize="18sp"
-            android:text="Henlommmmmmmmmmmmmmmmmmmmmmmmmmmm!"
-            android:textColor="@color/colorText"
-            android:layout_weight="90"
-            >
-        </TextView>
-        <TextView
-            android:id="@+id/messageViewTime"
+        android:id="@+id/messageViewParentLayout"
+        android:orientation="vertical"
+        android:gravity="start">
+
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textSize="10sp"
-            android:text="16:20"
-            android:textColor="#E0E0E0"
-            android:paddingEnd="10dp"
-            android:paddingStart="5dp"
-            android:gravity="bottom|end">
-        </TextView>
+            android:layout_height="wrap_content"
+            android:id="@+id/messageViewLayout"
+            android:orientation="horizontal"
+            android:layout_margin="12dp"
+            android:background="@drawable/bot_text"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp">
+            <TextView
+                android:id="@+id/messageViewMessage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingStart="10dp"
+                android:paddingEnd="5dp"
+                android:textSize="18sp"
+                android:text="Henlo!"
+                android:textColor="@color/colorText"
+                android:layout_weight="90" />
+            <TextView
+                android:id="@+id/messageViewTime"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textSize="10sp"
+                android:text="16:20"
+                android:textColor="#E0E0E0"
+                android:paddingEnd="10dp"
+                android:paddingStart="5dp"
+                android:gravity="bottom|end" />
+        </LinearLayout>
+
     </LinearLayout>
-</LinearLayout>
+
+</layout>
